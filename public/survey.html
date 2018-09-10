@@ -297,18 +297,42 @@
                     $("#quest10").val().trim(),
                 ]
             };
+
+            $.post("/api/friends", userData,
+                function (data) {
+
+                    // If a table is available... tell user they are booked.
+                    if (data) {
+                        alert("Yay! We found a match!");
+                    }
+
+                    // If a table is available... tell user they on the waiting list.
+                    else {
+                        alert("Sorry you are on the wait list");
+                    }
+
+                    // Clear the form when submitting
+                    $("#name").val('')
+                    $("#photo").val('')
+                    $("#quest1").val(''),
+                        $("#quest2").val(''),
+                        $("#quest3").val(),
+                        $("#quest4").val().trim(),
+                        $("#quest5").val().trim(),
+                        $("#quest6").val().trim(),
+                        $("#quest7").val().trim(),
+                        $("#quest8").val().trim(),
+                        $("#quest9").val().trim(),
+                        $("#quest10").val().trim(),
+                ]
+
+                });
+
         });
 
-        $.ajax({
-            method: "POST",
-            url: "/api/friends"
-        }).then(function (data) {
-            console.log(data);
 
-            // data.forEach(function (table) {
-            //     $("ul#tables").append(`<li>${table.customerName}</li>`);
-        });
-        // });
+
+
 
 
     </script>
