@@ -4,12 +4,12 @@
 // * A POST routes `/api/friends`. This will be used to handle incoming survey results. This route will also be used to handle the compatibility logic. 
 
 // linbking this routes to the data sources
-const friends = require("../app/data/friends");
+const friendsData = require("../app/data/friends");
 
 module.exports = function (app) {
 
     app.get("/api/friends", function (req, res) {
-        res.json(friends);
+        res.json(friendsData);
     });
 
     app.post("/api/friends", function (req, res) {
@@ -19,8 +19,8 @@ module.exports = function (app) {
         const allDifferences = [];
 
         // math.abs will give a value of the difference in numbers
-        for (var i = 0; i < friends.length - 1; i++) {
-            for (var j = 0; j < 6; j++) {
+        for (var i = 0; i < friendsData.length - 1; i++) {
+            for (var j = 0; j < 10; j++) {
                 totalDifference += Math.abs(
                     friends[i].scores[j] - userData.scores[j]
                 );
@@ -29,10 +29,10 @@ module.exports = function (app) {
             totalDifference = 0;
         }
 
-        const closesMatch = friends[
+        const closestMatch = friendsData[
             allDifferences.indexOf(Math.min.apply(null, allDifferences))
         ];
-        res.send(closesMatch);
+        res.send(closestMatch);
     });
 
 };
