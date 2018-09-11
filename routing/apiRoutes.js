@@ -13,6 +13,9 @@ module.exports = function (app) {
     });
 
     app.post("/api/friends", function (req, res) {
+
+        console.log('data', req.body);
+
         // assigning variables for users results
         const userData = req.body;
         const totalDifference = 0;
@@ -22,11 +25,11 @@ module.exports = function (app) {
         for (var i = 0; i < friendsData.length - 1; i++) {
             for (var j = 0; j < 10; j++) {
                 totalDifference += Math.abs(
-                    friends[i].scores[j] - userData.scores[j]
+                    friendsData[i].scores[j] - userData.scores[j]
                 );
             }
             allDifferences.push(totalDifference);
-            totalDifference = 0;
+            // totalDifference = 0;
         }
 
         const closestMatch = friendsData[
