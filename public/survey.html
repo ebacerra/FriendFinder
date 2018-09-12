@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body style="color:rgb(99, 98, 100)">
     <div class="container max-auto">
         <hr>
         <h2><strong>Survey Questions</strong></h2>
@@ -269,106 +269,125 @@
         </footer>
 
     </div>
-
-
     <!-- Modal -->
-    <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Closest Match</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h2 id="closest-match"></h2>
-                    <img id="image-match" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <div id="results-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal -->
+            <div class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Closest Match</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2 id="closest-match"></h2>
+                            <img id="image-match" src="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-    <!-- jQuery -->
-    <script src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
-        crossorigin='anonymous'></script>
-
-    <!-- JavaScript -->
-
-    <script>
-
-        $(document).ready(function () {
-
-
-            $(".submit").on("click", function (event) {
-                event.preventDefault();
-                console.log('VAL', $("#quest1 :selected").val());
 
 
 
-                console.log("BUTTON is working")
-                // Here we grab the form elements
-                var userData = {
-                    name: $("#name").val().trim(),
-                    photo: $("#photo").val().trim(),
-                    scores: [
-                        $("#quest1").val(),
-                        $("#quest2").val(),
-                        $("#quest3").val(),
-                        $("#quest4").val(),
-                        $("#quest5").val(),
-                        $("#quest6").val(),
-                        $("#quest7").val(),
-                        $("#quest8").val(),
-                        $("#quest9").val(),
-                        $("#quest10").val()
-                    ]
-                };
+            <!-- Bootstrap/JS for modal -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+                crossorigin="anonymous"></script>
 
-                $.post("/api/friends", userData,
-                    function (data) {
-                        console.log("this is working", data);
-                        // 
-                        $("#closet-match").text(data.name);
-                        $("#image-match").attr("src", data.photo);
+            <!-- jQuery -->
+            <script src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
+                crossorigin='anonymous'></script>
+
+            <!-- JavaScript -->
+
+            <script>
+
+                $(document).ready(function () {
 
 
-                        // If a table is available... tell user they on the waiting list.
-                        else {
-                            alert("Please fill out all fields before submitting!");
-                        }
+                    $(".submit").on("click", function (event) {
+                        event.preventDefault();
+                        console.log('VAL', $("#quest1 :selected").val());
+
+                        // alert("hello")
+
+                        console.log("BUTTON is working")
+                        // Here we grab the form elements
+                        var userData = {
+                            name: $("#name").val().trim(),
+                            photo: $("#photo").val().trim(),
+                            scores: [
+                                $("#quest1").val(),
+                                $("#quest2").val(),
+                                $("#quest3").val(),
+                                $("#quest4").val(),
+                                $("#quest5").val(),
+                                $("#quest6").val(),
+                                $("#quest7").val(),
+                                $("#quest8").val(),
+                                $("#quest9").val(),
+                                $("#quest10").val()
+                            ]
+                        };
+
+                        $.post("/api/friends", userData, function (data) {
+                            // console.log("this is working", data);
+                            // // 
+
+
+                            if (userData === data) {
+                                alert("We have found a match" + data.name);
+                            } else {
+                                alert("Please fill out all fields before submitting!");
+                            };
+
+                            // $("#closest-match").text(data.name
+                            // $("#image-match").attr("src", data.photo)
+
+
+
+
+                            // $("#results-modal").modal("toggle");
+                            // If a table is available... tell user they on the waiting list.
+                            // else {
+                            //    
+                            // }
+                        });
+
+                        // Clear the form when submitting
+                        $("#name").val('')
+                        $("#photo").val('')
+                        $("#quest1").val(''),
+                            $("#quest2").val(''),
+                            $("#quest3").val(''),
+                            $("#quest4").val(''),
+                            $("#quest5").val(''),
+                            $("#quest6").val(''),
+                            $("#quest7").val(''),
+                            $("#quest8").val(''),
+                            $("#quest9").val(''),
+                            $("#quest10").val('')
+
+
+
+
                     });
 
-                // Clear the form when submitting
-                $("#name").val('')
-                $("#photo").val('')
-                $("#quest1").val(''),
-                    $("#quest2").val(''),
-                    $("#quest3").val(''),
-                    $("#quest4").val(''),
-                    $("#quest5").val(''),
-                    $("#quest6").val(''),
-                    $("#quest7").val(''),
-                    $("#quest8").val(''),
-                    $("#quest9").val(''),
-                    $("#quest10").val('')
 
 
 
-
-            });
-
+                })
 
 
-
-        })
-
-
-    </script>
+            </script>
 </body>
 
 </html>
